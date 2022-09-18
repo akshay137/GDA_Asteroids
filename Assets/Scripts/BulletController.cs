@@ -10,7 +10,7 @@ public class BulletController : MonoBehaviour
 
 	private void Start()
 	{
-		Destroy(this.gameObject, Lifetime);
+		Destroy(this.gameObject, Lifetime); // set lifetime
 	}
 
 	private void FixedUpdate()

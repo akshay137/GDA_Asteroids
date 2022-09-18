@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +9,7 @@ public class AsteroidsGameManager : MonoBehaviour
 
 	public Camera cam;
 
-	public Object obstaclePrefab;
+	public GameObject obstaclePrefab;
 
 	public BoundsController bounds;
 
@@ -57,7 +56,6 @@ public class AsteroidsGameManager : MonoBehaviour
 
 	public void StartGame()
 	{
-		// do something
 		level = 0;
 		score = 0;
 		RecalculateBounds();
@@ -77,21 +75,21 @@ public class AsteroidsGameManager : MonoBehaviour
 		T[] objects = GameObject.FindObjectsOfType<T>();
 		for (int i = 0; i < objects.Length; ++i)
 		{
-			Destroy(objects[i].GameObject());
+			GameObject go = objects[i] as GameObject;
+			Destroy(go);
 		}
 	}
 
 	public void GameOver()
 	{
 		Debug.LogFormat("Game Over: {0}", score);
+		
 		// clean the level
 		DestroyAllOfType<ObstacleController>();
 		DestroyAllOfType<BulletController>();
 
 		ScoreManager.UpdateScore(score);
 		SceneManager.LoadScene(Scenes.GameOver);
-
-		// show game over screen
 	}
 
 	void SpawnObstacles(int count)
@@ -114,7 +112,7 @@ public class AsteroidsGameManager : MonoBehaviour
 				Debug.LogFormat("new position: {0}", position);
 			}
 
-			Object obstacle = Instantiate(obstaclePrefab, position, Quaternion.identity);
+			GameObject obstacle = Instantiate(obstaclePrefab, position, Quaternion.identity);
 			if (null == obstacle)
 			{
 				continue;

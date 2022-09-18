@@ -15,13 +15,6 @@ public class ObstacleController : MonoBehaviour
 		direction = Quaternion.Euler(0, 0, angle) * Vector3.up;
 	}
 
-	public void SetDirection(float x, float y)
-	{
-		direction.x = x;
-		direction.y = y;
-		direction.z = 0;
-	}
-
 	private void FixedUpdate()
 	{
 		float delta = Time.fixedDeltaTime;

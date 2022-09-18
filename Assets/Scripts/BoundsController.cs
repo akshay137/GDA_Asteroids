@@ -24,20 +24,17 @@ public class BoundsController : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D collider)
 	{
-		GameObject go = collider.gameObject;
-		Debug.LogFormat("exiting {0}", go);
-		go.transform.position = WrapPosition(go.transform.position);
+		collider.transform.position = WrapPosition(collider.transform.position);
 	}
 
 	public Vector3 WrapPosition(Vector3 position)
 	{
 		Vector3 limit = extents;
-		Vector3 newPosition = new Vector3(
+		return new Vector3(
 			WrapModulo(position.x, -limit.x, limit.x),
 			WrapModulo(position.y, -limit.y, limit.y),
 			position.z
 		);
-		return newPosition;
 	}
 
 	float WrapModulo(float value, float min, float max)

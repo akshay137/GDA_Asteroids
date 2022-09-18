@@ -53,6 +53,7 @@ MonoBehaviour:
   Speed: 5
   FireRate: 0.5
   LookAtSafeDistance: 1
+  rigidBody: {fileID: 1644522656831748522}
 --- !u!212 &264163461362296661
 SpriteRenderer:
   m_ObjectHideFlags: 0
