@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +9,7 @@ public class AsteroidsGameManager : MonoBehaviour
 
 	public Camera cam;
 
-	public Object obstaclePrefab;
+	public GameObject obstaclePrefab;
 
 	public BoundsController bounds;
 
@@ -50,14 +49,13 @@ public class AsteroidsGameManager : MonoBehaviour
 		bounds.SetExtents(corner);
 	}
 
-	public void Start()
+	void Start()
 	{
 		StartGame();
 	}
 
 	public void StartGame()
 	{
-		// do something
 		level = 0;
 		score = 0;
 		RecalculateBounds();
@@ -72,26 +70,12 @@ public class AsteroidsGameManager : MonoBehaviour
 		hud.SetScore(score);
 	}
 
-	void DestroyAllOfType<T>() where T : Object
-	{
-		T[] objects = GameObject.FindObjectsOfType<T>();
-		for (int i = 0; i < objects.Length; ++i)
-		{
-			Destroy(objects[i].GameObject());
-		}
-	}
-
 	public void GameOver()
 	{
 		Debug.LogFormat("Game Over: {0}", score);
-		// clean the level
-		DestroyAllOfType<ObstacleController>();
-		DestroyAllOfType<BulletController>();
 
 		ScoreManager.UpdateScore(score);
 		SceneManager.LoadScene(Scenes.GameOver);
-
-		// show game over screen
 	}
 
 	void SpawnObstacles(int count)
@@ -100,7 +84,6 @@ public class AsteroidsGameManager : MonoBehaviour
 		{
 			Vector3 position = bounds.GetRandomPoint();
 
-			// can be ignored in workshop
 			if (Vector3.Distance(position, ship.transform.position) < SpawnSafeDistance)
 			{
 				Vector3 shiftDirection = new Vector3(
@@ -114,7 +97,7 @@ public class AsteroidsGameManager : MonoBehaviour
 				Debug.LogFormat("new position: {0}", position);
 			}
 
-			Object obstacle = Instantiate(obstaclePrefab, position, Quaternion.identity);
+			GameObject obstacle = Instantiate(obstaclePrefab, position, Quaternion.identity);
 			if (null == obstacle)
 			{
 				continue;

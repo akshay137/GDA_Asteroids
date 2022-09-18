@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1.5
   TurnSpeed: 30
+  rigidBody: {fileID: 1229803583032946801}
 --- !u!212 &2363341326451533848
 SpriteRenderer:
   m_ObjectHideFlags: 0

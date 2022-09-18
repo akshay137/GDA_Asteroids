@@ -8,7 +8,7 @@ public class ShipController : MonoBehaviour
 	public readonly string ForwardAxis = "Vertical";
 	public readonly string FireAction = "Fire1";
 
-	public Object BulletPrefab;
+	public GameObject BulletPrefab;
 
 	public Transform Gun;
 
@@ -19,6 +19,8 @@ public class ShipController : MonoBehaviour
 	public float LookAtSafeDistance = 1.0f;
 
 	private float lastFiredTS = 0.0f;
+
+	public Rigidbody2D rigidBody;
 
 	private void Update()
 	{
@@ -33,7 +35,8 @@ public class ShipController : MonoBehaviour
 
 	void Move(float amount)
 	{
-		transform.position += amount * Speed * transform.up;
+		Vector2 forward = new Vector2(transform.up.x, transform.up.y);
+		rigidBody.position += amount * Speed * forward;
 	}
 
 	void LookAtCursor()
@@ -44,7 +47,7 @@ public class ShipController : MonoBehaviour
 		if (direction.magnitude < LookAtSafeDistance) return;
 
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90.0f;
-		transform.rotation = Quaternion.Euler(0, 0, angle);
+		rigidBody.rotation = angle;
 	}
 
 	void Fire()
@@ -53,15 +56,13 @@ public class ShipController : MonoBehaviour
 		if (currentTime < (lastFiredTS + FireRate)) return; // can't fire yet
 		lastFiredTS = currentTime;
 
-		Object bullet = Instantiate(BulletPrefab, Gun.position, Gun.rotation);
-		// do something to bullet
+		Instantiate(BulletPrefab, Gun.position, Gun.rotation);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collider)
 	{
 		if (!collider.CompareTag("obstacle")) return;
 
-		Debug.LogFormat("Collided with: {0} at {1}", collider.gameObject, collider.transform.position);
 		AsteroidsGameManager.instance.GameOver();
 	}
 }
