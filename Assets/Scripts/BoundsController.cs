@@ -44,13 +44,8 @@ public class BoundsController : MonoBehaviour
 	{
 		if (value > min)
 		{
-			return min + FMod(value - min, max - min);
+			return min + ((value - min) % (max - min));
 		}
-		return max - FMod(min - value, max - min);
-	}
-
-	float FMod(float value, float divisor)
-	{
-		return value - (divisor * Mathf.Floor(value / divisor));
+		return max - ((min - value) % (max - min));
 	}
 }
